@@ -41,6 +41,6 @@ brew upgrade --cask chipbar
 brew uninstall --cask chipbar
 ```
 
-See [CHANGELOG.md](CHANGELOG.md) for release notes and [ROADMAP.md](ROADMAP.md) for upcoming work.
+See [CHANGELOG.md](CHANGELOG.md) for release notes.
 
 Have fun ;)
