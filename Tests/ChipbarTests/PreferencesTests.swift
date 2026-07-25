@@ -31,21 +31,52 @@ final class PreferencesTests: XCTestCase {
     XCTAssertEqual(prefs2.refreshIntervalSeconds, 2)
   }
 
+  func test_allowsHalfSecondAndFiveSeconds() {
+    let prefs = Preferences(defaults: defaults)
+    prefs.refreshIntervalSeconds = 0.5
+    XCTAssertEqual(prefs.refreshIntervalSeconds, 0.5)
+    prefs.refreshIntervalSeconds = 5
+    XCTAssertEqual(prefs.refreshIntervalSeconds, 5)
+
+    let prefs2 = Preferences(defaults: defaults)
+    XCTAssertEqual(prefs2.refreshIntervalSeconds, 5)
+  }
+
   func test_invalidValuesFallBackToOne() {
-    defaults.set(0, forKey: "chipbar.refreshIntervalSeconds")
+    defaults.set(0.0, forKey: Preferences.refreshIntervalKey)
     XCTAssertEqual(Preferences(defaults: defaults).refreshIntervalSeconds, 1)
 
-    defaults.set(3, forKey: "chipbar.refreshIntervalSeconds")
+    defaults.set(3.0, forKey: Preferences.refreshIntervalKey)
     XCTAssertEqual(Preferences(defaults: defaults).refreshIntervalSeconds, 1)
 
-    defaults.set(-5, forKey: "chipbar.refreshIntervalSeconds")
+    defaults.set(-5.0, forKey: Preferences.refreshIntervalKey)
     XCTAssertEqual(Preferences(defaults: defaults).refreshIntervalSeconds, 1)
+  }
+
+  func test_migratesLegacyKeyOnFirstRead() {
+    defaults.set(2, forKey: Preferences.legacyRefreshIntervalKey)
+    XCTAssertNil(defaults.object(forKey: Preferences.refreshIntervalKey))
+
+    let prefs = Preferences(defaults: defaults)
+    XCTAssertEqual(prefs.refreshIntervalSeconds, 2)
+    XCTAssertEqual(defaults.double(forKey: Preferences.refreshIntervalKey), 2)
+  }
+
+  func test_legacyKeyIgnoredWhenValueNoLongerAllowed() {
+    defaults.set(3, forKey: Preferences.legacyRefreshIntervalKey)
+    XCTAssertEqual(Preferences(defaults: defaults).refreshIntervalSeconds, 1)
+  }
+
+  func test_v2KeyTakesPrecedenceOverLegacy() {
+    defaults.set(1, forKey: Preferences.legacyRefreshIntervalKey)
+    defaults.set(5.0, forKey: Preferences.refreshIntervalKey)
+    XCTAssertEqual(Preferences(defaults: defaults).refreshIntervalSeconds, 5)
   }
 
   func test_publisherEmitsOnChange() {
     let prefs = Preferences(defaults: defaults)
     let exp = expectation(description: "publisher fired")
-    var received: [Int] = []
+    var received: [Double] = []
 
     prefs.refreshIntervalSecondsPublisher
       .dropFirst() // drop initial value

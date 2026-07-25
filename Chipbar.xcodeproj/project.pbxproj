@@ -8,17 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		0BBA208A785FD2921184C49C /* CPUReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75574D91D270A8E018D7F3DC /* CPUReaderTests.swift */; };
+		1CA389CCFBD9271BD21916BC /* cpu-gpu-5-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 54459E87A2C4179B1B90D5C6 /* cpu-gpu-5-25.png */; };
 		2192042E02B241F02558B13D /* SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4E47D0F5BAB7F4D56771EF /* SnapshotTests.swift */; };
+		5903C86874D2DA76AF62DC1D /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0779DF3B92B7DDE66FB9E4D5 /* AppIcon.icns */; };
 		59B41424DAAC222DD83021BB /* CPUReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1ED668286A6A244BC0307 /* CPUReader.swift */; };
 		5C953BF20BC0AEE0360417FB /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808C3209B430586A9C9C820D /* Preferences.swift */; };
+		5ECD6233B49211DC973E4E88 /* SnapshotHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42809D44AE3360727AE207C8 /* SnapshotHelpers.swift */; };
 		746A1752DFEB60F429599305 /* StatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFE7BD7897FA26ABA6B16FC /* StatusBarView.swift */; };
+		8D25D2B4363A910FFDD7AE73 /* all-zero.png in Resources */ = {isa = PBXBuildFile; fileRef = 74B470B466B6A99651E286B2 /* all-zero.png */; };
 		968A26ED67C90D52589B8DD0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FBBE6E1A5934F6DEFA003C /* main.swift */; };
 		9C604E4048F94A6342323FE6 /* MetricsSamplerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1252F0ADB97518E28F73D9 /* MetricsSamplerTests.swift */; };
 		9C80E821BE23CAC3EB5BA6F1 /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4B9FAA1EB3360563E24303 /* Snapshot.swift */; };
 		A93F356E090584B820D78E7B /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E24F0F3DD562D451FD2E854 /* PreferencesTests.swift */; };
 		ABF1EF2838468D8BC1EA1307 /* RAMReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74FE420E69EAA385D44D582 /* RAMReaderTests.swift */; };
+		B72BDF191E2AD516703D36D5 /* gpu-only-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AA4345CECE184D3E194A392 /* gpu-only-25.png */; };
 		C21D1B4A4257DADFC78C193A /* MetricsSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C8EF94D38FB1F95F3A0DF3 /* MetricsSampler.swift */; };
+		C5CBDD6E05EC88946AAE0682 /* StatusBarViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA78237EF81951AA7266C64 /* StatusBarViewSnapshotTests.swift */; };
+		CD29E91D327C4C360690CDD9 /* cpu-only-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A098FA700ED93C844F3601B /* cpu-only-50.png */; };
 		D05176FEACBF93B0E5310392 /* GPUReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1A5FEA442C87FC1E256BE6 /* GPUReader.swift */; };
+		D159A814504B0C014D455C42 /* all-50-75-100.png in Resources */ = {isa = PBXBuildFile; fileRef = CFA32EBA3093F75D76A2951A /* all-50-75-100.png */; };
 		D83DCB6DD040114C79A60E89 /* RAMReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703B98694D20082C94071847 /* RAMReader.swift */; };
 		F443B263D4F3A88EF4D7F64A /* GPUReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D618537069E4D80575115DFA /* GPUReaderTests.swift */; };
 		FE17ACD050B05DC37D160EFA /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC1D0B48CC9EADB2D8F1F4C /* StatusBarController.swift */; };
@@ -35,12 +43,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0779DF3B92B7DDE66FB9E4D5 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		1CA78237EF81951AA7266C64 /* StatusBarViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarViewSnapshotTests.swift; sourceTree = "<group>"; };
 		2E24F0F3DD562D451FD2E854 /* PreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
+		3A098FA700ED93C844F3601B /* cpu-only-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cpu-only-50.png"; sourceTree = "<group>"; };
 		3EC1D0B48CC9EADB2D8F1F4C /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		42809D44AE3360727AE207C8 /* SnapshotHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelpers.swift; sourceTree = "<group>"; };
+		54459E87A2C4179B1B90D5C6 /* cpu-gpu-5-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cpu-gpu-5-25.png"; sourceTree = "<group>"; };
 		5D1252F0ADB97518E28F73D9 /* MetricsSamplerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsSamplerTests.swift; sourceTree = "<group>"; };
 		703B98694D20082C94071847 /* RAMReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RAMReader.swift; sourceTree = "<group>"; };
 		70BD0B2F7386A4F613290C1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		74B470B466B6A99651E286B2 /* all-zero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all-zero.png"; sourceTree = "<group>"; };
 		75574D91D270A8E018D7F3DC /* CPUReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUReaderTests.swift; sourceTree = "<group>"; };
+		7AA4345CECE184D3E194A392 /* gpu-only-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gpu-only-25.png"; sourceTree = "<group>"; };
 		7FFE7BD7897FA26ABA6B16FC /* StatusBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarView.swift; sourceTree = "<group>"; };
 		808C3209B430586A9C9C820D /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		885AB74D769A6580C9CB0BE3 /* ChipbarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChipbarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,6 +63,7 @@
 		BD4B9FAA1EB3360563E24303 /* Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snapshot.swift; sourceTree = "<group>"; };
 		CD4E47D0F5BAB7F4D56771EF /* SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTests.swift; sourceTree = "<group>"; };
 		CEF1ED668286A6A244BC0307 /* CPUReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUReader.swift; sourceTree = "<group>"; };
+		CFA32EBA3093F75D76A2951A /* all-50-75-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all-50-75-100.png"; sourceTree = "<group>"; };
 		D4FBBE6E1A5934F6DEFA003C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D618537069E4D80575115DFA /* GPUReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUReaderTests.swift; sourceTree = "<group>"; };
 		E76CE16A9A6DC1A9B6F74A38 /* Chipbar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chipbar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,7 +80,10 @@
 				5D1252F0ADB97518E28F73D9 /* MetricsSamplerTests.swift */,
 				2E24F0F3DD562D451FD2E854 /* PreferencesTests.swift */,
 				F74FE420E69EAA385D44D582 /* RAMReaderTests.swift */,
+				42809D44AE3360727AE207C8 /* SnapshotHelpers.swift */,
 				CD4E47D0F5BAB7F4D56771EF /* SnapshotTests.swift */,
+				1CA78237EF81951AA7266C64 /* StatusBarViewSnapshotTests.swift */,
+				82758739DDA52E34EF2DEE9E /* __Snapshots__ */,
 			);
 			name = ChipbarTests;
 			path = Tests/ChipbarTests;
@@ -76,10 +95,19 @@
 				C2FAF793EAB08C1E8F95FC3B /* App */,
 				72DF4329710C2E439918690A /* Metrics */,
 				E9FEE0D156CC0FF8133F1E1E /* Preferences */,
+				644147726195E0CD2FAA0962 /* Resources */,
 				D35191B7FB1E54D7D9350DAD /* UI */,
 			);
 			name = Chipbar;
 			path = Sources/Chipbar;
+			sourceTree = "<group>";
+		};
+		644147726195E0CD2FAA0962 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0779DF3B92B7DDE66FB9E4D5 /* AppIcon.icns */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		6D377B97AC98B673787CBAC5 /* Products */ = {
@@ -101,6 +129,18 @@
 				BD4B9FAA1EB3360563E24303 /* Snapshot.swift */,
 			);
 			path = Metrics;
+			sourceTree = "<group>";
+		};
+		82758739DDA52E34EF2DEE9E /* __Snapshots__ */ = {
+			isa = PBXGroup;
+			children = (
+				CFA32EBA3093F75D76A2951A /* all-50-75-100.png */,
+				74B470B466B6A99651E286B2 /* all-zero.png */,
+				54459E87A2C4179B1B90D5C6 /* cpu-gpu-5-25.png */,
+				3A098FA700ED93C844F3601B /* cpu-only-50.png */,
+				7AA4345CECE184D3E194A392 /* gpu-only-25.png */,
+			);
+			path = __Snapshots__;
 			sourceTree = "<group>";
 		};
 		997C72E3D21C07CE214E3DCB = {
@@ -146,6 +186,7 @@
 			buildConfigurationList = F5B93022851508C26B7C4282 /* Build configuration list for PBXNativeTarget "ChipbarTests" */;
 			buildPhases = (
 				C9CF8DA12283CECF4BC1C986 /* Sources */,
+				CE28A5EF540A0FEDCA241EB9 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -164,6 +205,7 @@
 			buildConfigurationList = 608E8B188F5779FB70850C63 /* Build configuration list for PBXNativeTarget "Chipbar" */;
 			buildPhases = (
 				B3BEF194AEBED78F4B9AB33B /* Sources */,
+				26D38E7B08F8938A5A5DE5A5 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -214,6 +256,29 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		26D38E7B08F8938A5A5DE5A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5903C86874D2DA76AF62DC1D /* AppIcon.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE28A5EF540A0FEDCA241EB9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D159A814504B0C014D455C42 /* all-50-75-100.png in Resources */,
+				8D25D2B4363A910FFDD7AE73 /* all-zero.png in Resources */,
+				1CA389CCFBD9271BD21916BC /* cpu-gpu-5-25.png in Resources */,
+				CD29E91D327C4C360690CDD9 /* cpu-only-50.png in Resources */,
+				B72BDF191E2AD516703D36D5 /* gpu-only-25.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B3BEF194AEBED78F4B9AB33B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -240,7 +305,9 @@
 				9C604E4048F94A6342323FE6 /* MetricsSamplerTests.swift in Sources */,
 				A93F356E090584B820D78E7B /* PreferencesTests.swift in Sources */,
 				ABF1EF2838468D8BC1EA1307 /* RAMReaderTests.swift in Sources */,
+				5ECD6233B49211DC973E4E88 /* SnapshotHelpers.swift in Sources */,
 				2192042E02B241F02558B13D /* SnapshotTests.swift in Sources */,
+				C5CBDD6E05EC88946AAE0682 /* StatusBarViewSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,14 +332,14 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.1.2;
+				CURRENT_PROJECT_VERSION = 0.1.3;
 				DEVELOPMENT_TEAM = "";
 				"EXCLUDED_ARCHS[sdk=*]" = x86_64;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Sources/Chipbar/App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.1.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ihororlovskyi.chipbar;
 				SDKROOT = macosx;
@@ -459,14 +526,14 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.1.2;
+				CURRENT_PROJECT_VERSION = 0.1.3;
 				DEVELOPMENT_TEAM = "";
 				"EXCLUDED_ARCHS[sdk=*]" = x86_64;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Sources/Chipbar/App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.1.3;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ihororlovskyi.chipbar;
 				SDKROOT = macosx;

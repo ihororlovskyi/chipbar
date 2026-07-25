@@ -1,10 +1,12 @@
 import Foundation
 
 actor MetricsSampler {
+  static let minimumIntervalSeconds: Double = 0.5
+
   private let cpu: any CPUReading
   private let gpu: any GPUReading
   private let ram: any RAMReading
-  private var intervalSeconds: Int
+  private var intervalSeconds: Double
   private let continuation: AsyncStream<Snapshot>.Continuation
   private var sleepTask: Task<Void, Never>?
   private var running = false
@@ -12,11 +14,11 @@ actor MetricsSampler {
   /// Stream of snapshots. Single-subscriber.
   nonisolated let snapshots: AsyncStream<Snapshot>
 
-  init(cpu: any CPUReading, gpu: any GPUReading, ram: any RAMReading, initialInterval: Int) {
+  init(cpu: any CPUReading, gpu: any GPUReading, ram: any RAMReading, initialInterval: Double) {
     self.cpu = cpu
     self.gpu = gpu
     self.ram = ram
-    self.intervalSeconds = max(1, initialInterval)
+    self.intervalSeconds = max(Self.minimumIntervalSeconds, initialInterval)
     let (stream, cont) = AsyncStream<Snapshot>.makeStream(bufferingPolicy: .bufferingNewest(1))
     self.snapshots = stream
     self.continuation = cont
@@ -31,8 +33,8 @@ actor MetricsSampler {
     }
   }
 
-  func setInterval(_ seconds: Int) {
-    intervalSeconds = max(1, seconds)
+  func setInterval(_ seconds: Double) {
+    intervalSeconds = max(Self.minimumIntervalSeconds, seconds)
     sleepTask?.cancel()
   }
 
@@ -42,9 +44,10 @@ actor MetricsSampler {
     continuation.finish()
   }
 
-  private func sleepWithCancellation(seconds: Int) async {
+  private func sleepWithCancellation(seconds: Double) async {
+    let nanos = UInt64(max(Self.minimumIntervalSeconds, seconds) * 1_000_000_000)
     let t = Task<Void, Never> {
-      try? await Task.sleep(nanoseconds: UInt64(seconds) * 1_000_000_000)
+      try? await Task.sleep(nanoseconds: nanos)
     }
     sleepTask = t
     _ = await t.value

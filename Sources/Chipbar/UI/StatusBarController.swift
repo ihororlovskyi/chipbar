@@ -3,7 +3,7 @@ import Combine
 
 @MainActor
 final class StatusBarController {
-  static let repositoryURL = URL(string: "https://github.com/ihororlovskyi/mchip")!
+  static let repositoryURL = URL(string: "https://github.com/ihororlovskyi/chipbar")!
 
   private let statusItem: NSStatusItem
   private let view: StatusBarView
@@ -11,8 +11,10 @@ final class StatusBarController {
   private let cpuItem = NSMenuItem(title: "CPU  —", action: nil, keyEquivalent: "")
   private let gpuItem = NSMenuItem(title: "GPU  —", action: nil, keyEquivalent: "")
   private let ramItem = NSMenuItem(title: "RAM  —", action: nil, keyEquivalent: "")
-  private let oneSecondItem = NSMenuItem(title: "1 second", action: nil, keyEquivalent: "")
-  private let twoSecondsItem = NSMenuItem(title: "2 seconds", action: nil, keyEquivalent: "")
+  private let halfSecondItem = NSMenuItem(title: "0.5 sec", action: nil, keyEquivalent: "")
+  private let oneSecondItem = NSMenuItem(title: "1 sec", action: nil, keyEquivalent: "")
+  private let twoSecondsItem = NSMenuItem(title: "2 sec", action: nil, keyEquivalent: "")
+  private let fiveSecondsItem = NSMenuItem(title: "5 sec", action: nil, keyEquivalent: "")
   private let preferences: Preferences
 
   init(preferences: Preferences) {
@@ -20,7 +22,7 @@ final class StatusBarController {
     let initialWidth = StatusBarView.width(for: preferences.metricVisibility)
     self.statusItem = NSStatusBar.system.statusItem(withLength: initialWidth)
     self.view = StatusBarView(frame: NSRect(x: 0, y: 0, width: initialWidth, height: NSStatusBar.system.thickness))
-    self.menu = NSMenu(title: "mchip")
+    self.menu = NSMenu(title: "Chipbar")
 
     statusItem.button?.addSubview(view)
     view.frame = statusItem.button?.bounds ?? view.frame
@@ -41,8 +43,11 @@ final class StatusBarController {
   }
 
   func refreshIntervalChecks() {
-    oneSecondItem.state = preferences.refreshIntervalSeconds == 1 ? .on : .off
-    twoSecondsItem.state = preferences.refreshIntervalSeconds == 2 ? .on : .off
+    let current = preferences.refreshIntervalSeconds
+    halfSecondItem.state = current == 0.5 ? .on : .off
+    oneSecondItem.state = current == 1 ? .on : .off
+    twoSecondsItem.state = current == 2 ? .on : .off
+    fiveSecondsItem.state = current == 5 ? .on : .off
   }
 
   func refreshVisibilityChecks() {
@@ -69,23 +74,29 @@ final class StatusBarController {
     menu.addItem(ramItem)
     menu.addItem(.separator())
 
-    let updateEvery = NSMenuItem(title: "Update every", action: nil, keyEquivalent: "")
-    let submenu = NSMenu(title: "Update every")
+    let intervalParent = NSMenuItem(title: "Interval", action: nil, keyEquivalent: "")
+    let submenu = NSMenu(title: "Interval")
+    halfSecondItem.target = self
+    halfSecondItem.action = #selector(selectHalfSecond)
     oneSecondItem.target = self
     oneSecondItem.action = #selector(selectOneSecond)
     twoSecondsItem.target = self
     twoSecondsItem.action = #selector(selectTwoSeconds)
+    fiveSecondsItem.target = self
+    fiveSecondsItem.action = #selector(selectFiveSeconds)
+    submenu.addItem(halfSecondItem)
     submenu.addItem(oneSecondItem)
     submenu.addItem(twoSecondsItem)
-    updateEvery.submenu = submenu
-    menu.addItem(updateEvery)
+    submenu.addItem(fiveSecondsItem)
+    intervalParent.submenu = submenu
+    menu.addItem(intervalParent)
 
     let about = NSMenuItem(title: "About", action: nil, keyEquivalent: "")
     about.submenu = makeAboutSubmenu()
     menu.addItem(about)
 
     menu.addItem(.separator())
-    let quit = NSMenuItem(title: "Quit mchip", action: #selector(quitApp), keyEquivalent: "q")
+    let quit = NSMenuItem(title: "Quit Chipbar", action: #selector(quitApp), keyEquivalent: "q")
     quit.target = self
     menu.addItem(quit)
   }
@@ -93,17 +104,13 @@ final class StatusBarController {
   private func makeAboutSubmenu() -> NSMenu {
     let submenu = NSMenu(title: "About")
 
-    let nameItem = NSMenuItem(title: "mchip", action: nil, keyEquivalent: "")
-    nameItem.isEnabled = false
-    submenu.addItem(nameItem)
-
-    let versionItem = NSMenuItem(title: "v\(Self.appVersion)", action: nil, keyEquivalent: "")
-    versionItem.isEnabled = false
-    submenu.addItem(versionItem)
-
-    let dateItem = NSMenuItem(title: Self.buildDateString, action: nil, keyEquivalent: "")
-    dateItem.isEnabled = false
-    submenu.addItem(dateItem)
+    let infoItem = NSMenuItem(
+      title: "Chipbar • v\(Self.appVersion) • \(Self.buildDateString)",
+      action: nil,
+      keyEquivalent: ""
+    )
+    infoItem.isEnabled = false
+    submenu.addItem(infoItem)
 
     let github = NSMenuItem(title: "GitHub", action: #selector(openRepository), keyEquivalent: "")
     github.target = self
@@ -143,6 +150,11 @@ final class StatusBarController {
     }
   }
 
+  @objc private func selectHalfSecond() {
+    preferences.refreshIntervalSeconds = 0.5
+    refreshIntervalChecks()
+  }
+
   @objc private func selectOneSecond() {
     preferences.refreshIntervalSeconds = 1
     refreshIntervalChecks()
@@ -150,6 +162,11 @@ final class StatusBarController {
 
   @objc private func selectTwoSeconds() {
     preferences.refreshIntervalSeconds = 2
+    refreshIntervalChecks()
+  }
+
+  @objc private func selectFiveSeconds() {
+    preferences.refreshIntervalSeconds = 5
     refreshIntervalChecks()
   }
 

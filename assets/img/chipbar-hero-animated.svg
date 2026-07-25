@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="1600" height="800" role="img" aria-label="Chipbar — animated hero">
+  <defs>
+    
+    <linearGradient id="bgg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d0d0d"></stop>
+      <stop offset="1" stop-color="#050505"></stop>
+    </linearGradient>
+
+    
+    <mask id="m-cpu" maskUnits="userSpaceOnUse">
+      <path d="M 40 72 h 300 q 20 0 20 20 v 68" stroke="white" stroke-width="2.4" fill="none"></path>
+    </mask>
+    <mask id="m-gpu" maskUnits="userSpaceOnUse">
+      <path d="M 760 100 h -260 q -20 0 -20 20 v 40" stroke="white" stroke-width="2.4" fill="none"></path>
+    </mask>
+    <mask id="m-ram" maskUnits="userSpaceOnUse">
+      <path d="M 320 380 h 60 q 20 0 20 -20 v -120" stroke="white" stroke-width="2.4" fill="none"></path>
+    </mask>
+
+    
+    <radialGradient id="g-cyan">
+      <stop offset="0" stop-color="#00E8ED"></stop>
+      <stop offset="0.5" stop-color="#0088FF" stop-opacity="0.8"></stop>
+      <stop offset="1" stop-color="#0088FF" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="g-magenta">
+      <stop offset="0" stop-color="#FF3DA6"></stop>
+      <stop offset="0.5" stop-color="#830CD1" stop-opacity="0.7"></stop>
+      <stop offset="1" stop-color="#830CD1" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="g-yellow">
+      <stop offset="0" stop-color="#FFD800"></stop>
+      <stop offset="0.5" stop-color="#FFD800" stop-opacity="0.7"></stop>
+      <stop offset="1" stop-color="#FFD800" stop-opacity="0"></stop>
+    </radialGradient>
+
+    
+    <linearGradient id="shimmer" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#777">
+        
+      </stop>
+      <stop offset="50%" stop-color="white">
+        
+      </stop>
+      <stop offset="100%" stop-color="#777">
+        
+      </stop>
+    </linearGradient>
+
+    
+    <linearGradient id="chip-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#262626"></stop>
+      <stop offset="1" stop-color="#0e0e0e"></stop>
+    </linearGradient>
+
+    <filter id="chip-shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.6"></feDropShadow>
+    </filter>
+  </defs>
+
+  
+  <rect x="0" y="0" width="800" height="400" fill="url(#bgg)"></rect>
+
+  
+  <g stroke="#3a3a3a" fill="none" stroke-width="1.2">
+    <path id="p-cpu" d="M 40 72 h 300 q 20 0 20 20 v 68" stroke-dasharray="600 600" pathLength="600">
+      
+    </path>
+    <path id="p-gpu" d="M 760 100 h -260 q -20 0 -20 20 v 40" stroke-dasharray="600 600" pathLength="600">
+      
+    </path>
+    <path id="p-ram" d="M 320 380 h 60 q 20 0 20 -20 v -120" stroke-dasharray="600 600" pathLength="600">
+      
+    </path>
+  </g>
+
+  
+  <circle cx="40" cy="72" r="4.4" fill="#0a0a0a" stroke="#3a3a3a" stroke-width="1.4"></circle>
+  <circle cx="760" cy="100" r="4.4" fill="#0a0a0a" stroke="#3a3a3a" stroke-width="1.4"></circle>
+  <circle cx="320" cy="380" r="4.4" fill="#0a0a0a" stroke="#3a3a3a" stroke-width="1.4"></circle>
+
+  
+  <text x="56" y="60" font-size="11" font-family="ui-monospace, &#39;IBM Plex Mono&#39;, monospace" fill="#666" letter-spacing="2">CPU</text>
+  <text x="744" y="88" font-size="11" font-family="ui-monospace, &#39;IBM Plex Mono&#39;, monospace" fill="#666" letter-spacing="2" text-anchor="end">GPU</text>
+  <text x="336" y="394" font-size="11" font-family="ui-monospace, &#39;IBM Plex Mono&#39;, monospace" fill="#666" letter-spacing="2">RAM</text>
+
+  
+  <g mask="url(#m-cpu)">
+    <circle r="28" fill="url(#g-cyan)">
+      
+    </circle>
+  </g>
+  <g mask="url(#m-gpu)">
+    <circle r="28" fill="url(#g-magenta)">
+      
+    </circle>
+  </g>
+  <g mask="url(#m-ram)">
+    <circle r="28" fill="url(#g-yellow)">
+      
+    </circle>
+  </g>
+
+  
+  <g fill="#252525">
+    <rect x="315" y="148" width="10" height="20" rx="3"></rect>
+    <rect x="355" y="148" width="10" height="20" rx="3"></rect>
+    <rect x="395" y="148" width="10" height="20" rx="3"></rect>
+    <rect x="435" y="148" width="10" height="20" rx="3"></rect>
+    <rect x="475" y="148" width="10" height="20" rx="3"></rect>
+    <rect x="315" y="232" width="10" height="20" rx="3"></rect>
+    <rect x="355" y="232" width="10" height="20" rx="3"></rect>
+    <rect x="395" y="232" width="10" height="20" rx="3"></rect>
+    <rect x="435" y="232" width="10" height="20" rx="3"></rect>
+    <rect x="475" y="232" width="10" height="20" rx="3"></rect>
+    <rect x="280" y="178" width="20" height="10" rx="3"></rect>
+    <rect x="280" y="212" width="20" height="10" rx="3"></rect>
+    <rect x="500" y="178" width="20" height="10" rx="3"></rect>
+    <rect x="500" y="212" width="20" height="10" rx="3"></rect>
+  </g>
+
+  
+  <rect x="300" y="168" width="200" height="64" rx="8" fill="url(#chip-body)" filter="url(#chip-shadow)"></rect>
+
+  
+  <text x="400" y="208" font-size="22" font-weight="600" fill="url(#shimmer)" text-anchor="middle" letter-spacing="0.04em" font-family="-apple-system, &#39;Inter&#39;, system-ui, sans-serif">Chipbar</text>
+</svg>

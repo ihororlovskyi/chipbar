@@ -30,8 +30,7 @@ xcodebuild \
   -exportPath "$EXPORT_DIR" \
   -exportOptionsPlist "$ROOT/scripts/ExportOptions.plist"
 
-APP="$EXPORT_DIR/mchip-v$VERSION.app"
-mv "$EXPORT_DIR/Chipbar.app" "$APP"
+APP="$EXPORT_DIR/Chipbar.app"
 codesign --force --deep --sign - "$APP"
 
 ditto -c -k --keepParent "$APP" "$ZIP"

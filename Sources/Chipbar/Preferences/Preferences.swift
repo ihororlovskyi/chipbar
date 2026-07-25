@@ -15,28 +15,23 @@ struct MetricVisibility: Equatable, Sendable {
 }
 
 final class Preferences {
-  static let refreshIntervalKey = "chipbar.refreshIntervalSeconds"
-  static let allowedIntervals: Set<Int> = [1, 2]
-  static let defaultInterval = 1
+  static let legacyRefreshIntervalKey = "chipbar.refreshIntervalSeconds"
+  static let refreshIntervalKey = "chipbar.refreshIntervalSecondsV2"
+  static let allowedIntervals: [Double] = [0.5, 1, 2, 5]
+  static let defaultInterval: Double = 1
 
   static let showCPUKey = "chipbar.show.cpu"
   static let showGPUKey = "chipbar.show.gpu"
   static let showRAMKey = "chipbar.show.ram"
 
   private let defaults: UserDefaults
-  private let intervalSubject: CurrentValueSubject<Int, Never>
+  private let intervalSubject: CurrentValueSubject<Double, Never>
   private let visibilitySubject: CurrentValueSubject<MetricVisibility, Never>
 
   init(defaults: UserDefaults = .standard) {
     self.defaults = defaults
 
-    let raw = defaults.object(forKey: Self.refreshIntervalKey) as? Int
-    let initialInterval: Int
-    if let raw, Self.allowedIntervals.contains(raw) {
-      initialInterval = raw
-    } else {
-      initialInterval = Self.defaultInterval
-    }
+    let initialInterval = Self.loadInterval(defaults: defaults)
     self.intervalSubject = CurrentValueSubject(initialInterval)
 
     let initialVisibility = MetricVisibility(
@@ -49,16 +44,16 @@ final class Preferences {
     )
   }
 
-  var refreshIntervalSeconds: Int {
+  var refreshIntervalSeconds: Double {
     get { intervalSubject.value }
     set {
-      let value = Self.allowedIntervals.contains(newValue) ? newValue : Self.defaultInterval
+      let value = Self.isAllowed(newValue) ? newValue : Self.defaultInterval
       defaults.set(value, forKey: Self.refreshIntervalKey)
       intervalSubject.send(value)
     }
   }
 
-  var refreshIntervalSecondsPublisher: AnyPublisher<Int, Never> {
+  var refreshIntervalSecondsPublisher: AnyPublisher<Double, Never> {
     intervalSubject.eraseToAnyPublisher()
   }
 
@@ -88,6 +83,24 @@ final class Preferences {
 
   enum Metric {
     case cpu, gpu, ram
+  }
+
+  private static func isAllowed(_ value: Double) -> Bool {
+    allowedIntervals.contains(value)
+  }
+
+  private static func loadInterval(defaults: UserDefaults) -> Double {
+    if let raw = defaults.object(forKey: refreshIntervalKey) as? Double, isAllowed(raw) {
+      return raw
+    }
+    if let legacyRaw = defaults.object(forKey: legacyRefreshIntervalKey) as? Int {
+      let migrated = Double(legacyRaw)
+      if isAllowed(migrated) {
+        defaults.set(migrated, forKey: refreshIntervalKey)
+        return migrated
+      }
+    }
+    return defaultInterval
   }
 
   private static func loadFlag(defaults: UserDefaults, key: String, default fallback: Bool) -> Bool {

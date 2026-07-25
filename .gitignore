@@ -3,6 +3,8 @@ Thumbs.db
 
 /examples/
 
+/assets/AppIcon.iconset/
+
 /.agents/
 /.claude/
 skills-lock.json
