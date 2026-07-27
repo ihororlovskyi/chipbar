@@ -1,6 +1,6 @@
 import XCTest
 import Combine
-@testable import Chipbar
+@testable import sysbar
 
 final class PreferencesTests: XCTestCase {
   private var defaults: UserDefaults!
@@ -8,7 +8,7 @@ final class PreferencesTests: XCTestCase {
   private var cancellables: Set<AnyCancellable> = []
 
   override func setUp() {
-    suiteName = "chipbar-tests-\(UUID().uuidString)"
+    suiteName = "sysbar-tests-\(UUID().uuidString)"
     defaults = UserDefaults(suiteName: suiteName)!
   }
 
@@ -51,26 +51,6 @@ final class PreferencesTests: XCTestCase {
 
     defaults.set(-5.0, forKey: Preferences.refreshIntervalKey)
     XCTAssertEqual(Preferences(defaults: defaults).refreshIntervalSeconds, 1)
-  }
-
-  func test_migratesLegacyKeyOnFirstRead() {
-    defaults.set(2, forKey: Preferences.legacyRefreshIntervalKey)
-    XCTAssertNil(defaults.object(forKey: Preferences.refreshIntervalKey))
-
-    let prefs = Preferences(defaults: defaults)
-    XCTAssertEqual(prefs.refreshIntervalSeconds, 2)
-    XCTAssertEqual(defaults.double(forKey: Preferences.refreshIntervalKey), 2)
-  }
-
-  func test_legacyKeyIgnoredWhenValueNoLongerAllowed() {
-    defaults.set(3, forKey: Preferences.legacyRefreshIntervalKey)
-    XCTAssertEqual(Preferences(defaults: defaults).refreshIntervalSeconds, 1)
-  }
-
-  func test_v2KeyTakesPrecedenceOverLegacy() {
-    defaults.set(1, forKey: Preferences.legacyRefreshIntervalKey)
-    defaults.set(5.0, forKey: Preferences.refreshIntervalKey)
-    XCTAssertEqual(Preferences(defaults: defaults).refreshIntervalSeconds, 5)
   }
 
   func test_publisherEmitsOnChange() {

@@ -1,4 +1,4 @@
-name: Chipbar
+name: sysbar
 
 options:
   deploymentTarget:
@@ -7,21 +7,21 @@ options:
   developmentLanguage: en
 
 targets:
-  Chipbar:
+  sysbar:
     type: application
     platform: macOS
     sources:
-      - Sources/Chipbar
+      - Sources/sysbar
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.ihororlovskyi.chipbar
-        MARKETING_VERSION: "0.1.3"
-        CURRENT_PROJECT_VERSION: "0.1.3"
+        PRODUCT_BUNDLE_IDENTIFIER: com.ihororlovskyi.sysbar
+        MARKETING_VERSION: "0.2.0"
+        CURRENT_PROJECT_VERSION: "0.2.0"
         MACOSX_DEPLOYMENT_TARGET: "14.0"
         ARCHS: arm64
         "EXCLUDED_ARCHS[sdk=*]": x86_64
         SWIFT_VERSION: "5.0"
-        INFOPLIST_FILE: Sources/Chipbar/App/Info.plist
+        INFOPLIST_FILE: Sources/sysbar/App/Info.plist
         GENERATE_INFOPLIST_FILE: "NO"
         CODE_SIGN_STYLE: Manual
         CODE_SIGN_IDENTITY: "-"
@@ -35,13 +35,13 @@ targets:
         release:
           ONLY_ACTIVE_ARCH: "NO"
 
-  ChipbarTests:
+  sysbarTests:
     type: bundle.unit-test
     platform: macOS
     sources:
-      - Tests/ChipbarTests
+      - Tests/sysbarTests
     dependencies:
-      - target: Chipbar
+      - target: sysbar
     settings:
       base:
         MACOSX_DEPLOYMENT_TARGET: "14.0"
@@ -55,10 +55,10 @@ targets:
         GENERATE_INFOPLIST_FILE: "YES"
 
 schemes:
-  Chipbar:
+  sysbar:
     build:
       targets:
-        Chipbar: all
+        sysbar: all
     test:
       targets:
-        - ChipbarTests
+        - sysbarTests

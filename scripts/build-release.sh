@@ -1,19 +1,19 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+set -e
 
 VERSION="${1:?usage: build-release.sh <version>}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 BUILD_DIR="$ROOT/build"
-ARCHIVE="$BUILD_DIR/Chipbar.xcarchive"
+ARCHIVE="$BUILD_DIR/sysbar.xcarchive"
 EXPORT_DIR="$BUILD_DIR/export"
-ZIP="$BUILD_DIR/Chipbar-$VERSION.zip"
+ZIP="$BUILD_DIR/sysbar-$VERSION.zip"
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 
 xcodebuild \
-  -project "$ROOT/Chipbar.xcodeproj" \
-  -scheme Chipbar \
+  -project "$ROOT/sysbar.xcodeproj" \
+  -scheme sysbar \
   -configuration Release \
   -destination 'generic/platform=macOS' \
   -archivePath "$ARCHIVE" \
@@ -30,7 +30,13 @@ xcodebuild \
   -exportPath "$EXPORT_DIR" \
   -exportOptionsPlist "$ROOT/scripts/ExportOptions.plist"
 
-APP="$EXPORT_DIR/Chipbar.app"
+APP="$EXPORT_DIR/sysbar.app"
+
+# Stamp the release date before signing — editing Info.plist afterwards breaks
+# the signature.
+RELEASE_DATE=$(date -u +%Y-%m-%d)
+/usr/libexec/PlistBuddy -c "Set :SysbarReleaseDate $RELEASE_DATE" "$APP/Contents/Info.plist"
+
 codesign --force --deep --sign - "$APP"
 
 ditto -c -k --keepParent "$APP" "$ZIP"

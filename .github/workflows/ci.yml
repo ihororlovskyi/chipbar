@@ -21,12 +21,12 @@ jobs:
       - name: Run tests
         run: |
           xcodebuild test \
-            -project Chipbar.xcodeproj \
-            -scheme Chipbar \
+            -project sysbar.xcodeproj \
+            -scheme sysbar \
             -destination 'platform=macOS,arch=arm64' \
             -enableCodeCoverage YES \
             | xcpretty || (xcodebuild test \
-              -project Chipbar.xcodeproj \
-              -scheme Chipbar \
+              -project sysbar.xcodeproj \
+              -scheme sysbar \
               -destination 'platform=macOS,arch=arm64' \
               -enableCodeCoverage YES)

@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 _No unreleased changes._
 
+## [0.2.0] — 2026-07-27
+
+### Added
+
+- `Launch at Login` toggle in the dropdown, backed by `SMAppService`. The row mirrors the real system state and is re-read every time the menu opens, so revoking the login item in System Settings is reflected immediately. When macOS reports that the registration is waiting for approval, the row reads `Launch at Login — Approval Required` and opens `System Settings → General → Login Items` instead of registering again.
+- Release date is now stamped into the app bundle at build time (`SysbarReleaseDate`) and shown in the About panel. Local development builds fall back to the executable's modification date.
+
+### Changed
+
+- Renamed from `Chipbar` to `sysbar`: app name, bundle, target, scheme, folders, scripts, CI artifacts, and the Homebrew cask. The release bundle is `sysbar.app`, the release zip is `sysbar-<version>.zip`, and the cask is `sysbar`. Homebrew migrates existing installations automatically via `cask_renames.json`, so `brew upgrade` is enough; manual installs need the old `Chipbar.app` dragged to Trash.
+- `CFBundleIdentifier` is now `com.ihororlovskyi.sysbar` (was `com.ihororlovskyi.chipbar`). The app requests no system permissions, so nothing is lost — but the change moves the `UserDefaults` domain, and settings are **not** migrated. After updating, metric visibility and the refresh interval return to their defaults: CPU and GPU visible, RAM hidden, 1 second cadence.
+- `About` is no longer a submenu. `About sysbar` opens the standard macOS About panel with the app icon, `Version <version> (<build>)`, release date, a clickable `GitHub` link, and the copyright line.
+- The old hero banner, screenshots, and demo are temporarily removed; they carry the old wordmark and UI, and return after refreshed captures and the new logo.
+- Homebrew 6 requires trusting the third-party cask before installation: `brew trust --cask ihororlovskyi/tap/sysbar`. Because this ad-hoc-signed build remains quarantined, first launch from `/Applications` via right-click `sysbar.app` → `Open` is required for Homebrew and manual installs.
+- `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` bumped to `0.2.0`.
+
 ## [0.1.3] — 2026-05-20
 
 ### Added
@@ -75,7 +91,8 @@ Initial release.
 - `scripts/update-cask.sh` — bumps `version` / `sha256` in the tap cask.
 - Homebrew tap at [`ihororlovskyi/homebrew-tap`](https://github.com/ihororlovskyi/homebrew-tap), installable via `brew install --cask chipbar`.
 
-[Unreleased]: https://github.com/ihororlovskyi/chipbar/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/ihororlovskyi/sysbar/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ihororlovskyi/sysbar/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/ihororlovskyi/chipbar/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/ihororlovskyi/chipbar/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/ihororlovskyi/chipbar/compare/v0.1.0...v0.1.1

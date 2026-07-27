@@ -15,9 +15,9 @@
   <key>CFBundleInfoDictionaryVersion</key>
   <string>6.0</string>
   <key>CFBundleName</key>
-  <string>Chipbar</string>
+  <string>sysbar</string>
   <key>CFBundleDisplayName</key>
-  <string>Chipbar</string>
+  <string>sysbar</string>
   <key>CFBundlePackageType</key>
   <string>APPL</string>
   <key>CFBundleShortVersionString</key>
@@ -29,6 +29,8 @@
   <key>LSUIElement</key>
   <true/>
   <key>NSHumanReadableCopyright</key>
-  <string>Copyright © 2026 Ihor Orlovskyi. All rights reserved.</string>
+  <string>© 2026 Ihor Orlovskyi</string>
+  <key>SysbarReleaseDate</key>
+  <string></string>
 </dict>
 </plist>

@@ -15,14 +15,13 @@ struct MetricVisibility: Equatable, Sendable {
 }
 
 final class Preferences {
-  static let legacyRefreshIntervalKey = "chipbar.refreshIntervalSeconds"
-  static let refreshIntervalKey = "chipbar.refreshIntervalSecondsV2"
+  static let refreshIntervalKey = "sysbar.refreshIntervalSeconds"
   static let allowedIntervals: [Double] = [0.5, 1, 2, 5]
   static let defaultInterval: Double = 1
 
-  static let showCPUKey = "chipbar.show.cpu"
-  static let showGPUKey = "chipbar.show.gpu"
-  static let showRAMKey = "chipbar.show.ram"
+  static let showCPUKey = "sysbar.show.cpu"
+  static let showGPUKey = "sysbar.show.gpu"
+  static let showRAMKey = "sysbar.show.ram"
 
   private let defaults: UserDefaults
   private let intervalSubject: CurrentValueSubject<Double, Never>
@@ -92,13 +91,6 @@ final class Preferences {
   private static func loadInterval(defaults: UserDefaults) -> Double {
     if let raw = defaults.object(forKey: refreshIntervalKey) as? Double, isAllowed(raw) {
       return raw
-    }
-    if let legacyRaw = defaults.object(forKey: legacyRefreshIntervalKey) as? Int {
-      let migrated = Double(legacyRaw)
-      if isAllowed(migrated) {
-        defaults.set(migrated, forKey: refreshIntervalKey)
-        return migrated
-      }
     }
     return defaultInterval
   }

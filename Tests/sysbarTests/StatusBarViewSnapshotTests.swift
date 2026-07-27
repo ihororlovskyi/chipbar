@@ -1,5 +1,5 @@
 import XCTest
-@testable import Chipbar
+@testable import sysbar
 
 @MainActor
 final class StatusBarViewSnapshotTests: XCTestCase {

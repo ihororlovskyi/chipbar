@@ -2,8 +2,8 @@ import AppKit
 import Combine
 
 @MainActor
-final class StatusBarController {
-  static let repositoryURL = URL(string: "https://github.com/ihororlovskyi/chipbar")!
+final class StatusBarController: NSObject {
+  static let repositoryURL = URL(string: "https://github.com/ihororlovskyi/sysbar")!
 
   private let statusItem: NSStatusItem
   private let view: StatusBarView
@@ -15,6 +15,8 @@ final class StatusBarController {
   private let oneSecondItem = NSMenuItem(title: "1 sec", action: nil, keyEquivalent: "")
   private let twoSecondsItem = NSMenuItem(title: "2 sec", action: nil, keyEquivalent: "")
   private let fiveSecondsItem = NSMenuItem(title: "5 sec", action: nil, keyEquivalent: "")
+  private let loginItemMenuItem = NSMenuItem(title: "Launch at Login", action: nil, keyEquivalent: "")
+  private let loginItem = LoginItem()
   private let preferences: Preferences
 
   init(preferences: Preferences) {
@@ -22,7 +24,8 @@ final class StatusBarController {
     let initialWidth = StatusBarView.width(for: preferences.metricVisibility)
     self.statusItem = NSStatusBar.system.statusItem(withLength: initialWidth)
     self.view = StatusBarView(frame: NSRect(x: 0, y: 0, width: initialWidth, height: NSStatusBar.system.thickness))
-    self.menu = NSMenu(title: "Chipbar")
+    self.menu = NSMenu(title: "sysbar")
+    super.init()
 
     statusItem.button?.addSubview(view)
     view.frame = statusItem.button?.bounds ?? view.frame
@@ -31,8 +34,10 @@ final class StatusBarController {
 
     buildMenu()
     statusItem.menu = menu
+    menu.delegate = self
     refreshIntervalChecks()
     refreshVisibilityChecks()
+    refreshLoginItemState()
   }
 
   func update(with snapshot: Snapshot) {
@@ -59,6 +64,27 @@ final class StatusBarController {
     let width = StatusBarView.width(for: visibility)
     statusItem.length = width
     view.frame = statusItem.button?.bounds ?? NSRect(x: 0, y: 0, width: width, height: NSStatusBar.system.thickness)
+  }
+
+  func refreshLoginItemState() {
+    switch loginItem.state {
+    case .enabled:
+      loginItemMenuItem.title = "Launch at Login"
+      loginItemMenuItem.state = .on
+      loginItemMenuItem.isEnabled = true
+    case .disabled:
+      loginItemMenuItem.title = "Launch at Login"
+      loginItemMenuItem.state = .off
+      loginItemMenuItem.isEnabled = true
+    case .requiresApproval:
+      loginItemMenuItem.title = "Launch at Login — Approval Required"
+      loginItemMenuItem.state = .mixed
+      loginItemMenuItem.isEnabled = true
+    case .unavailable:
+      loginItemMenuItem.title = "Launch at Login"
+      loginItemMenuItem.state = .off
+      loginItemMenuItem.isEnabled = false
+    }
   }
 
   private func buildMenu() {
@@ -91,50 +117,48 @@ final class StatusBarController {
     intervalParent.submenu = submenu
     menu.addItem(intervalParent)
 
-    let about = NSMenuItem(title: "About", action: nil, keyEquivalent: "")
-    about.submenu = makeAboutSubmenu()
+    loginItemMenuItem.target = self
+    loginItemMenuItem.action = #selector(toggleLaunchAtLogin)
+    menu.addItem(loginItemMenuItem)
+
+    let about = NSMenuItem(title: "About sysbar", action: #selector(showAbout), keyEquivalent: "")
+    about.target = self
     menu.addItem(about)
 
     menu.addItem(.separator())
-    let quit = NSMenuItem(title: "Quit Chipbar", action: #selector(quitApp), keyEquivalent: "q")
+    let quit = NSMenuItem(title: "Quit sysbar", action: #selector(quitApp), keyEquivalent: "q")
     quit.target = self
     menu.addItem(quit)
   }
 
-  private func makeAboutSubmenu() -> NSMenu {
-    let submenu = NSMenu(title: "About")
+  @objc private func showAbout() {
+    let fallback = Self.executableModificationDate
+    let stamped = Bundle.main.infoDictionary?[AboutInfo.releaseDateKey] as? String
+    let date = AboutInfo.releaseDate(plistValue: stamped, fallback: fallback)
 
-    let infoItem = NSMenuItem(
-      title: "Chipbar • v\(Self.appVersion) • \(Self.buildDateString)",
-      action: nil,
-      keyEquivalent: ""
-    )
-    infoItem.isEnabled = false
-    submenu.addItem(infoItem)
-
-    let github = NSMenuItem(title: "GitHub", action: #selector(openRepository), keyEquivalent: "")
-    github.target = self
-    submenu.addItem(github)
-
-    return submenu
+    // LSUIElement apps are not active by default; without this the panel opens
+    // behind whatever window has focus.
+    NSApp.activate(ignoringOtherApps: true)
+    NSApplication.shared.orderFrontStandardAboutPanel(options: [
+      .applicationName: "sysbar",
+      .applicationVersion: Self.appVersion,
+      .version: Self.buildVersion,
+      .credits: AboutInfo.credits(dateText: AboutInfo.format(date), repositoryURL: Self.repositoryURL),
+    ])
   }
 
   private static var appVersion: String {
     (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "0.0.0"
   }
 
-  private static var buildDateString: String {
-    let url = Bundle.main.executableURL ?? Bundle.main.bundleURL
-    let attrs = try? FileManager.default.attributesOfItem(atPath: url.path)
-    let date = (attrs?[.modificationDate] as? Date) ?? Date()
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.dateFormat = "dd MMM yy"
-    return formatter.string(from: date)
+  private static var buildVersion: String {
+    (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "0"
   }
 
-  @objc private func openRepository() {
-    NSWorkspace.shared.open(Self.repositoryURL)
+  private static var executableModificationDate: Date {
+    let url = Bundle.main.executableURL ?? Bundle.main.bundleURL
+    let attrs = try? FileManager.default.attributesOfItem(atPath: url.path)
+    return (attrs?[.modificationDate] as? Date) ?? Date()
   }
 
   @objc private func toggleCPU() { toggle(.cpu, item: cpuItem) }
@@ -170,11 +194,46 @@ final class StatusBarController {
     refreshIntervalChecks()
   }
 
+  @objc private func toggleLaunchAtLogin() {
+    // Already registered but unapproved: re-registering does nothing useful,
+    // the user has to approve it in System Settings.
+    if loginItem.state == .requiresApproval {
+      loginItem.openSystemSettings()
+      return
+    }
+
+    do {
+      try loginItem.setEnabled(loginItem.state != .enabled)
+    } catch {
+      presentLoginItemError(error)
+    }
+    refreshLoginItemState()
+  }
+
+  private func presentLoginItemError(_ error: Error) {
+    let alert = NSAlert()
+    alert.messageText = "Could not change the login item"
+    alert.informativeText = """
+      \(error.localizedDescription)
+
+      Registration usually fails when the app runs from outside /Applications. \
+      Move sysbar.app to /Applications and try again.
+      """
+    alert.alertStyle = .warning
+    alert.runModal()
+  }
+
   @objc private func quitApp() {
     NSApp.terminate(nil)
   }
 
   private func percent(_ value: Double) -> String {
     "\(Int((value * 100).rounded()))%"
+  }
+}
+
+extension StatusBarController: NSMenuDelegate {
+  func menuWillOpen(_ menu: NSMenu) {
+    refreshLoginItemState()
   }
 }
